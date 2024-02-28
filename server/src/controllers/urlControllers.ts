@@ -26,7 +26,7 @@ export const getAllUrls = async (
   res: express.Response
 ) => {
   try {
-    const shortUrls = await urlModel.find();
+    const shortUrls = await urlModel.find().sort({ createdAt: -1 });
     if (shortUrls.length <= 0) {
       res.status(404).send({ message: "Short URLs not found!" });
     } else {
@@ -45,7 +45,6 @@ export const getUrl = async (req: express.Request, res: express.Response) => {
     } else {
       shortUrl.clicks++;
       shortUrl.save();
-      console.log(shortUrl);
 
       res.redirect(`${shortUrl.fullUrl}`);
     }
